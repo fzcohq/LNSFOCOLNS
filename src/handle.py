@@ -1,5 +1,5 @@
+from flask import Request
 import hashlib
-import web
 import uuid
 import asyncio
 import time
@@ -8,15 +8,20 @@ import receive
 from media import Media 
 from zhipu import LLM
 class Handle(object):
-    def GET(self):
+    def GET(self, request: Request):
         try:
-            data = web.input()
+            # data = web.input()
+            data = request.args
             if len(data) == 0:
                 return "hello, this is handle view"
-            signature = data.signature
-            timestamp = data.timestamp
-            nonce = data.nonce
-            echostr = data.echostr
+            # signature = data.signature
+            # timestamp = data.timestamp
+            # nonce = data.nonce
+            # echostr = data.echostr
+            signature = data.get('signature')
+            timestamp = data.get('timestamp')
+            nonce = data.get('nonce')
+            echostr = data.get('echostr')
             token = "DjrCSEGsNPiW2hE9gwiKOFOhiwDJRBrz" #请按照公众平台官网\基本配置中信息填写
 
             list = [token, timestamp, nonce]
@@ -35,9 +40,10 @@ class Handle(object):
                 return ""
         except (Exception, Argument):
             return Argument
-    def POST(self):
+    def POST(self, request: Request):
         try:
-            webData = web.data()
+            # webData = web.data()
+            webData = request.data
             print("Handle Post webdata is ", webData)
             #后台打日志
             recMsg = receive.parse_xml(webData)
@@ -52,7 +58,7 @@ class Handle(object):
                 fromUser = recMsg.ToUserName
                 mediaId16K = recMsg.MediaId16K
                 myMedia = Media()
-                accessToken = "83_RuKme4gvs1Am_p5EyJjoXWFm4cWXJkPGmrJeAfXejyu3XSHyPTSAODJmb7y9oA7hto-oVLt1Xo-gUrZKCUZ4ByuUBzFj2KimhxDUWs7rE2qahaTcRGkRLVy6m-IHGReAEAPOZ"
+                accessToken = "83_2YbumNbkmaMZYq4e4RVUmQKX61WUhAyl404cGL4J-Sdv7uUB4nJ_byygS5WMQ8KCx1Z7gNvJichySE-zy0EwVWcjaX5aegD1E4hic-1aKHcDKcjmhJ4847GC3D0UIRcAGAQEN"
                 fileName = myMedia.get(accessToken, mediaId16K)
                 print(fileName)
                 voiceId=str(uuid.uuid4())
