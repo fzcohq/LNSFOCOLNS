@@ -1,5 +1,4 @@
 import web
-import asyncio
 from handle import Handle
 
 urls = (
