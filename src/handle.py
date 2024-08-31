@@ -43,8 +43,7 @@ class Handle(object):
     def POST(self, request: Request):
         try:
             # webData = web.data()
-            print(request.values)
-            webData = request.values.get('input')
+            webData = request.data
             print("Handle Post webdata is ", webData)
             #后台打日志
             recMsg = receive.parse_xml(webData)
@@ -59,7 +58,7 @@ class Handle(object):
                 fromUser = recMsg.ToUserName
                 mediaId16K = recMsg.MediaId16K
                 myMedia = Media()
-                accessToken = "83_RuKme4gvs1Am_p5EyJjoXWFm4cWXJkPGmrJeAfXejyu3XSHyPTSAODJmb7y9oA7hto-oVLt1Xo-gUrZKCUZ4ByuUBzFj2KimhxDUWs7rE2qahaTcRGkRLVy6m-IHGReAEAPOZ"
+                accessToken = "83_2YbumNbkmaMZYq4e4RVUmQKX61WUhAyl404cGL4J-Sdv7uUB4nJ_byygS5WMQ8KCx1Z7gNvJichySE-zy0EwVWcjaX5aegD1E4hic-1aKHcDKcjmhJ4847GC3D0UIRcAGAQEN"
                 fileName = myMedia.get(accessToken, mediaId16K)
                 print(fileName)
                 voiceId=str(uuid.uuid4())
