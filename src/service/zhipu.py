@@ -6,6 +6,7 @@ class LLM(object):
             model="glm-4-0520",  # 填写需要调用的模型编码
             messages=[
                 {"role": "user", "content": content},
+                {"role": "user", "content": "请帮我概括以上内容"},
             ],
         )
         msg = response.choices[0].message.content
